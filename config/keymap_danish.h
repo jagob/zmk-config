@@ -16,7 +16,10 @@
 
 #pragma once
 
-#include "keymap.h"
+#include <dt-bindings/zmk/hid_usage.h>
+#include <dt-bindings/zmk/hid_usage_pages.h>
+#include <dt-bindings/zmk/modifiers.h>
+#include <dt-bindings/zmk/keys.h>
 
 // clang-format off
 
@@ -34,57 +37,57 @@
  * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
  */
 // Row 1
-#define DK_HALF KC_GRV  // ½
-#define DK_1    KC_1    // 1
-#define DK_2    KC_2    // 2
-#define DK_3    KC_3    // 3
-#define DK_4    KC_4    // 4
-#define DK_5    KC_5    // 5
-#define DK_6    KC_6    // 6
-#define DK_7    KC_7    // 7
-#define DK_8    KC_8    // 8
-#define DK_9    KC_9    // 9
-#define DK_0    KC_0    // 0
-#define DK_PLUS KC_MINS // +
-#define DK_ACUT KC_EQL  // ´ (dead)
+#define DK_HALF GRAVE  // ½
+#define DK_1    N1     // 1
+#define DK_2    N2     // 2
+#define DK_3    N3     // 3
+#define DK_4    N4     // 4
+#define DK_5    N5     // 5
+#define DK_6    N6     // 6
+#define DK_7    N7     // 7
+#define DK_8    N8     // 8
+#define DK_9    N9     // 9
+#define DK_0    N0     // 0
+#define DK_PLUS MINUS  // +
+#define DK_ACUT EQUAL  // ´ (dead)
 // Row 2
-#define DK_Q    KC_Q    // Q
-#define DK_W    KC_W    // W
-#define DK_E    KC_E    // E
-#define DK_R    KC_R    // R
-#define DK_T    KC_T    // T
-#define DK_Y    KC_Y    // Y
-#define DK_U    KC_U    // U
-#define DK_I    KC_I    // I
-#define DK_O    KC_O    // O
-#define DK_P    KC_P    // P
-#define DK_ARNG KC_LBRC // Å
-#define DK_DIAE KC_RBRC // ¨ (dead)
+#define DK_Q    Q     // Q
+#define DK_W    W     // W
+#define DK_E    E     // E
+#define DK_R    R     // R
+#define DK_T    T     // T
+#define DK_Y    Y     // Y
+#define DK_U    U     // U
+#define DK_I    I     // I
+#define DK_O    O     // O
+#define DK_P    P     // P
+#define DK_ARNG LBKT  // Å
+#define DK_DIAE RBKT  // ¨ (dead)
 // Row 3
-#define DK_A    KC_A    // A
-#define DK_S    KC_S    // S
-#define DK_D    KC_D    // D
-#define DK_F    KC_F    // F
-#define DK_G    KC_G    // G
-#define DK_H    KC_H    // H
-#define DK_J    KC_J    // J
-#define DK_K    KC_K    // K
-#define DK_L    KC_L    // L
-#define DK_AE   KC_SCLN // Æ
-#define DK_OSTR KC_QUOT // Ø
-#define DK_QUOT KC_NUHS // '
+#define DK_A    A        // A
+#define DK_S    S        // S
+#define DK_D    D        // D
+#define DK_F    F        // F
+#define DK_G    G        // G
+#define DK_H    H        // H
+#define DK_J    J        // J
+#define DK_K    K        // K
+#define DK_L    L        // L
+#define DK_AE   KC_SCLN  // Æ KC_SCLN
+#define DK_OSTR KC_QUOT  // Ø
+#define DK_QUOT NUHS     // '
 // Row 4
-#define DK_LABK KC_NUBS // <
-#define DK_Z    KC_Z    // Z
-#define DK_X    KC_X    // X
-#define DK_C    KC_C    // C
-#define DK_V    KC_V    // V
-#define DK_B    KC_B    // B
-#define DK_N    KC_N    // N
-#define DK_M    KC_M    // M
-#define DK_COMM KC_COMM // ,
-#define DK_DOT  KC_DOT  // .
-#define DK_MINS KC_SLSH // -
+#define DK_LABK NUBS   // <
+#define DK_Z    Z      // Z
+#define DK_X    X      // X
+#define DK_C    C      // C
+#define DK_V    V      // V
+#define DK_B    B      // B
+#define DK_N    N      // N
+#define DK_M    M      // M
+#define DK_COMM COMMA  // ,
+#define DK_DOT  DOT    // .
+#define DK_MINS FSLH   // -
 
 /* Shifted symbols
  * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
@@ -100,28 +103,28 @@
  * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
  */
 // Row 1
-#define DK_SECT S(DK_HALF) // §
-#define DK_EXLM S(DK_1)    // !
-#define DK_DQUO S(DK_2)    // "
-#define DK_HASH S(DK_3)    // #
-#define DK_CURR S(DK_4)    // ¤
-#define DK_PERC S(DK_5)    // %
-#define DK_AMPR S(DK_6)    // &
-#define DK_SLSH S(DK_7)    // /
-#define DK_LPRN S(DK_8)    // (
-#define DK_RPRN S(DK_9)    // )
-#define DK_EQL  S(DK_0)    // =
-#define DK_QUES S(DK_PLUS) // ?
-#define DK_GRV  S(DK_ACUT) // ` (dead)
+#define DK_SECT LSHIFT(DK_HALF)  // §
+#define DK_EXLM LSHIFT(DK_1)     // !
+#define DK_DQUO LSHIFT(DK_2)     // "
+#define DK_HASH LSHIFT(DK_3)     // #
+#define DK_CURR LSHIFT(DK_4)     // ¤
+#define DK_PERC LSHIFT(DK_5)     // %
+#define DK_AMPR LSHIFT(DK_6)     // &
+#define DK_SLSH LSHIFT(DK_7)     // /
+#define DK_LPRN LSHIFT(DK_8)     // (
+#define DK_RPRN LSHIFT(DK_9)     // )
+#define DK_EQL  LSHIFT(DK_0)     // =
+#define DK_QUES LSHIFT(DK_PLUS)  // ?
+#define DK_GRV  LSHIFT(DK_ACUT)  // ` (dead)
 // Row 2
-#define DK_CIRC S(DK_DIAE) // ^ (dead)
+#define DK_CIRC LSHIFT(DK_DIAE)  // ^ (dead)
 // Row 3
-#define DK_ASTR S(DK_QUOT) // *
+#define DK_ASTR LSHIFT(DK_QUOT)  // *
 // Row 4
-#define DK_RABK S(DK_LABK) // >
-#define DK_SCLN S(DK_COMM) // ;
-#define DK_COLN S(DK_DOT)  // :
-#define DK_UNDS S(DK_MINS) // _
+#define DK_RABK LSHIFT(DK_LABK)  // >
+#define DK_SCLN LSHIFT(DK_COMM)  // ;
+#define DK_COLN LSHIFT(DK_DOT)   // :
+#define DK_UNDS LSHIFT(DK_MINS)  // _
 
 /* AltGr symbols
  * ┌───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───┬───────┐
@@ -137,17 +140,17 @@
  * └────┴────┴────┴────────────────────────┴────┴────┴────┴────┘
  */
 // Row 1
-#define DK_AT   ALGR(DK_2)    // @
-#define DK_PND  ALGR(DK_3)    // £
-#define DK_DLR  ALGR(DK_4)    // $
-#define DK_EURO ALGR(DK_5)    // €
-#define DK_LCBR ALGR(DK_7)    // {
-#define DK_LBRC ALGR(DK_8)    // [
-#define DK_RBRC ALGR(DK_9)    // ]
-#define DK_RCBR ALGR(DK_0)    // }
-#define DK_PIPE ALGR(DK_ACUT) // |
+#define DK_AT   RALT(DK_2)     // @
+#define DK_PND  RALT(DK_3)     // £
+#define DK_DLR  RALT(DK_4)     // $
+#define DK_EURO RALT(DK_5)     // €
+#define DK_LCBR RALT(DK_7)     // {
+#define DK_LBRC RALT(DK_8)     // [
+#define DK_RBRC RALT(DK_9)     // ]
+#define DK_RCBR RALT(DK_0)     // }
+#define DK_PIPE RALT(DK_ACUT)  // |
 // Row 2
-#define DK_TILD ALGR(DK_DIAE) // ~ (dead)
+#define DK_TILD RALT(DK_DIAE)  // ~ (dead)
 // Row 4
-#define DK_BSLS ALGR(DK_LABK) // (backslash)
-#define DK_MICR ALGR(DK_M)    // µ
+#define DK_BSLS RALT(DK_LABK)  // (backslash)
+#define DK_MICR RALT(DK_M)     // µ
