@@ -1,3 +1,4 @@
+/* TODO: mouse emulation behaviors */
 /*
  * Copyright (c) 2020 The ZMK Contributors
  *
@@ -8,13 +9,6 @@
 #include <dt-bindings/zmk/keys.h>
 #include "keymap_danish.h"
 
-// // Layer aliases
-// #define COLEMAK_DH 0
-// #define NUM 1
-// #define SYM 2
-// #define CFG 3
-// #define QWERTY 4
-
 // Layer aliases
 #define CMK 0
 #define NUM 1
@@ -22,121 +16,64 @@
 #define CFG 3
 #define QTY 4
 
-// // Desktop and tab navigation shortcuts
-// #define D_LT   LC(LG(LEFT))
-// #define D_RT   LC(LG(RIGHT))
-// #define TAB_RT LC(TAB)
-// #define TAB_LT LC(LS(TAB))
-
-// https://zmk.dev/docs/features/debouncing
-&kscan0 {
-    debounce-press-ms = <1>;    // Default is 5 ms
-    debounce-release-ms = <4>;  // Default is 5 ms
-};
-
 // mod tap
 &mt {
     flavor = "hold-preferred";
-    tapping-term-ms = <150>;
+    tapping-term-ms = <200>;
 };
 
 // layer tap
 &lt {
     flavor = "balanced";
-    tapping-term-ms = <150>;
+    tapping-term-ms = <200>;
 };
 
 / {
-    cond_layers {
-        compatible = "zmk,conditional-layers";
-        // Define FUN layer as tri-state
-        func_tristate {
-            if-layers = <NUM SYM>;
-            then-layer = <CFG>;
-        };
-    };
-
 	keymap {
 		compatible = "zmk,keymap";
 
 		COLEMAK_DH {
             label = "CMK";
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
 			bindings = <
-	&kp TAB   &kp Q &kp W &kp F &kp P &kp B                                                &kp J  &kp L  &kp U        &kp Y      &kp SQT     &kp BSLH
-	&kp ESC   &kp A &kp R &kp S &kp T &kp G                                                &kp M  &kp H  &kp E        &kp I      &kp O       &kp SQT
-	&kp LSHFT &kp Z &kp X &kp C &kp D &kp V &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp K  &kp H  &kp DK_COMMA &kp DK_DOT &kp DK_MINS &kp RCTRL
-	        ___  &kp LGUI &lt NUM BSPC &mt LCTRL SPACE &kp ESC         &kp RET   &mt LSHIFT RET   &lt SYM TAB &mt RALT ESC ___
+	&kp TAB   &kp Q       &kp W &kp F &kp P &kp B                                                &kp J  &kp L  &kp U        &kp Y       &kp SQT      &kp BSLH
+	&kp ESC   &mt LGUI A  &kp R &kp S &kp T &kp G                                                &kp M  &kp H  &kp E        &kp I       &mt LALT O   &kp SQT
+	&kp LSHFT &kp Z       &kp X &kp C &kp D &kp V &kp LSHFT &kp LCTRL        &kp LSHFT &kp LCTRL &kp K  &kp H  &kp DK_COMM  &kp DK_DOT  &kp DK_MINS  &kp RCTRL
+	          &kp LGUI    &kp LGUI &lt NUM BSPC &mt LCTRL SPACE &mt LSHFT RET   &mt LCTRL SPACE  &mt LSHIFT RET  &lt SYM TAB  &mt LALT ESC  &kp LALT
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
 		};
 
 		NUMBERS {
             label = "NUM";
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
 			bindings = <
-	&kp TAB   &kp N1      &kp N2     &kp N3      &kp N4      &kp N5                               &kp N6  &kp N7  &kp N8        &kp N9      &kp N0     &kp BSLH
-	&kp ESC   &mt LGUI N0 &kp DK_EQL &kp DK_ASTR &kp DK_SLSH &kp DK_AT                            &kp M   &kp N0  &kp N1        &kp I       &kp 0       &kp SQT
-	&kp LSHFT &kp DK_MINS &kp DK_EQL &kp DK_MINS &kp DK_PLUS &kp DK_CIRC &kp LSHFT &kp LSHFT      &kp LSHFT &kp LSHFT &kp K  &kp H  &kp DK_COMMA &kp DK_DOT &kp DK_MINS &kp RCTRL
-	        ___  &kp LGUI &trans &mt LCTRL SPACE &kp ESC                   &kp RET &mt LSHIFT RET &lt CFG TAB &mt RALT ESC ___
+	&kp TAB   &kp N1      &kp N2     &kp N3      &kp N4      &kp N5                                                    &kp N6    &kp N7    &kp N8        &kp N9      &kp N0      &kp BSLH
+	&kp ESC   &mt LGUI N0 &kp DK_EQL &kp DK_ASTR &kp DK_SLSH &kp DK_AT                                                 &kp HOME  &kp N0    &kp N1        &kp END     &kp N0      &kp SQT
+	&kp LSHFT &kp DK_MINS &kp DK_EQL &kp DK_MINS &kp DK_PLUS &kp DK_CIRC  &kp LSHFT  &kp LSHFT    &kp LSHFT &kp LSHFT  &kp PG_DN &kp PG_UP &kp DK_COMM   &kp DK_DOT  &kp DK_MINS &kp RCTRL
+	          &kp LGUI &kp LGUI &trans &mt LCTRL SPACE &kp ESC                                  &kp RET &mt LSHIFT RET &lt CFG TAB &mt LALT ESC &kp LALT
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
 		};
 
 		SYMBOLS_NAVIGATION {
             label = "SYM";
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
 			bindings = <
-	&kp TAB   &kp Q &kp W &kp F &kp P &kp B                                                &kp J  &kp L  &kp U        &kp Y      &kp SQT     &kp BSLH
-	&kp ESC   &kp A &kp R &kp S &kp T &kp G                                                &kp M  &kp H  &kp E        &kp I      &kp O       &kp SQT
-	&kp LSHFT &kp Z &kp X &kp C &kp D &kp V &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp K  &kp H  &kp DK_COMMA &kp DK_DOT &kp DK_MINS &kp RCTRL
-	        ___  &kp LGUI &lt CFG BSPC &mt LCTRL SPACE &kp ESC         &kp RET   &mt LSHIFT RET   &trans &mt RALT ESC ___
+	&kp TAB   &kp DK_EXLM &kp DK_DQUO  &kp DK_HASH &kp DK_DLR  &kp DK_PERC                                               &kp DK_AMPR  &kp DK_LPRN  &kp DK_RPRN  &kp DK_LCBR  &kp DK_RCBR  &kp BSLH
+	&kp ESC   &kp DK_QUES &kp DK_EQL   &kp DK_ASTR &kp DK_SLSH &kp DK_AT                                                 &kp LEFT     &kp DOWN     &kp UP       &kp RIGHT    &kp DK_QUOT  &kp SQT
+	&kp LSHFT &kp DK_BSLS &kp DK_TILD  &kp DK_MINS &kp DK_PLUS &kp DK_CIRC  &kp LSHFT  &kp LSHFT    &kp LSHFT &kp LSHFT  &kp DK_PIPE  &kp DK_LBRC  &kp DK_RBRC  &kp DK_LABK  &kp DK_RABK  &kp RCTRL
+	        &kp LGUI  &kp LGUI &lt CFG BSPC &mt LCTRL SPACE &kp ESC         &kp RET   &mt LSHIFT RET   &trans &mt LALT ESC &kp LALT
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
 		};
 
 		CONFIG {
             label = "CFG";
-// ---------------------------------------------------------------------------------------------------------------------------------
-// |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-//                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
 			bindings = <
-	&kp TAB   &kp Q &kp W &kp F &kp P &kp B                                                &kp J  &kp L  &kp U        &kp Y      &kp SQT     &kp BSLH
-	&kp ESC   &kp A &kp R &kp S &kp T &kp G                                                &kp M  &kp H  &kp E        &kp I      &kp O       &kp SQT
-	&kp LSHFT &kp Z &kp X &kp C &kp D &kp V &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp K  &kp H  &kp DK_COMMA &kp DK_DOT &kp DK_MINS &kp RCTRL
-	        ___  &kp LGUI &trans &mt LCTRL SPACE &kp ESC         &kp RET   &mt LSHIFT RET   &trans &mt RALT ESC ___
+	&kp TAB   &kp F1  &kp F2  &kp F3 &kp F4 &kp F5                                               &kp F6  &kp F7  &kp F8        &kp F9      &kp F10     &kp DK_ARNG
+	&kp ESC   &kp F11 &kp F12 &kp S  &kp T  &kp G                                                &kp M   &kp H   &kp E         &kp I       &kp DK_AE   &kp DK_OSTR
+	&kp LSHFT &kp Z   &kp X   &kp C  &kp D  &kp V &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp K   &kp H   &kp DK_COMM   &kp DK_DOT  &kp DK_MINS &kp RCTRL
+	        &kp LGUI  &kp LGUI &trans &mt LCTRL SPACE &kp ESC         &kp RET   &mt LSHIFT RET   &trans &mt LALT ESC &kp LALT
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
 		};
-
-//         QWERTY {
-//             label = "QTY";
-// // ---------------------------------------------------------------------------------------------------------------------------------
-// // |  ESC  |  Q  |  W  |  E   |  R   |  T   |                                          |  Y   |  U    |  I    |  O   |   P   |   \  |
-// // |  TAB  |  A  |  S  |  D   |  F   |  G   |                                          |  H   |  J    |  K    |  L   |   ;   |   '  |
-// // | SHIFT |  Z  |  X  |  C   |  V   |  B   | L SHIFT | L SHIFT |  | L SHIFT | L SHIFT |  N   |  M    |  ,    |  .   |   /   | CTRL |
-// //                     | GUI  | DEL  | RET  |  SPACE  |   ESC   |  |   RET   |  SPACE  | TAB  | BSPC  | R-ALT |
-// 			bindings = <
-// 	&kp ESC   &kp Q &kp W &kp E &kp R &kp T                                                &kp Y &kp U  &kp I     &kp O   &kp P    &kp BSLH
-// 	&kp TAB   &kp A &kp S &kp D &kp F &kp G                                                &kp H &kp J  &kp K     &kp L   &kp SEMI &kp SQT
-// 	&kp LSHFT &kp Z &kp X &kp C &kp V &kp B &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp N &kp M  &kp COMMA &kp DOT &kp FSLH &kp RCTRL
-// 	                 &kp LGUI &kp DEL &kp RET &kp SPACE &kp ESC        &kp RET  &kp SPACE  &kp TAB &kp BSPC &kp RALT
-// 			>;
-// 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
-// 		};
 	};
 };
