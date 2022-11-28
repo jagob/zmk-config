@@ -1,4 +1,5 @@
-/* TODO: mouse emulation behaviors */
+//  TODO: mouse emulation behaviors
+//  west build --pristine -d build/left -b nice_nano_v2 -- -DSHIELD=kyria_rev2_left -DZMK_CONFIG=/home/jacob/code/zmk-config/config
 /*
  * Copyright (c) 2020 The ZMK Contributors
  *
@@ -7,6 +8,7 @@
 
 #include <behaviors.dtsi>
 #include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/mouse.h>
 #include "keymap_danish.h"
 
 // Layer aliases
@@ -18,36 +20,92 @@
 
 // mod tap
 &mt {
-    flavor = "hold-preferred";
+    /* flavor = "hold-preferred"; */
+    flavor = "balanced";
     tapping-term-ms = <200>;
 };
 
 // layer tap
 &lt {
-    flavor = "balanced";
+    flavor = "hold-preferred";
     tapping-term-ms = <200>;
 };
 
+
+&mmv {
+    time-to-max-speed-ms = <250>;
+    acceleration-exponent = <1>;
+};
+
+/*                            KEY POSITIONS
+  ╭────────────────────────╮                 ╭────────────────────────╮
+  │  0   1   2   3   4   5 │                 │  6   7   8   9  10  11 │
+  │ 12  13  14  15  16  17 ╰───────╮ ╭───────╯ 18  19  20  21  22  23 │
+  │ 24  25  26  27  28  29  30  31 │ │ 32  33  34  35  36  37  38  39 │
+  ╰───────────╮ 40  41  42  43  44 │ │ 45  46  47  48  49 ╭───────────╯
+              ╰────────────────────╯ ╰────────────────────╯            */
 / {
+    behaviors {
+        phtl: positional_hold_tap_left {
+            compatible = "zmk,behavior-hold-tap";
+            label = "POSITIONAL_HOLD_TAP_LEFT";
+            #binding-cells = <2>;
+			/* flavor = "tap-preferred"; */
+			flavor = "balanced";
+            tapping-term-ms = <250>;
+            quick-tap-ms = <200>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <
+     0   1   2   3   4   5                      6   7   8   9  10  11
+    12                  17                     18  19  20  21  22  23
+    24  25  26  27  28  29  30  31     32  33  34  35  36  37  38  39
+                40  41  42      44     45  46  47  48  49
+            >;
+        };
+        phtr: positional_hold_tap_right {
+            compatible = "zmk,behavior-hold-tap";
+            label = "POSITIONAL_HOLD_TAP_RIGHT";
+            #binding-cells = <2>;
+			flavor = "balanced";
+            tapping-term-ms = <250>;
+            quick-tap-ms = <200>;
+            bindings = <&kp>, <&kp>;
+            hold-trigger-key-positions = <
+     0   1   2   3   4   5                      6   7   8   9  10  11
+    12  13  14  15  16  17                     18                  23
+    24  25  26  27  28  29  30  31     32  33  34  35  36  37  38  39
+                40  41  42      44     45  46  47  48  49
+            >;
+        };
+    };
+
 	keymap {
 		compatible = "zmk,keymap";
 
 		COLEMAK_DH {
             label = "CMK";
+/* -------------------------------------------------------------                                            -------------------------------------------------------------
+   |    ESC  |    Q    |    W    |    E    |    R    |    T    |                                            |    Y    |    U    |    I    |    O    |    P    |    \    |
+   |    TAB  |    A    |    S    |    D    |    F    |    G    |--------------------    --------------------|    H    |    J    |    K    |    L    |    ;    |    '    |
+   |    SHIFT|    Z    |    X    |    C    |    V    |    B    |    TAB  |    ESC  |    |    BSCP |   DEL   |    N    |    M    |    ,    |    .    |    /    |   CTRL  |
+   ------------------------------|   CTRL  |   GUI   |   ALT   |   SPACE |    num  |    |    nav  |   RET   |   ALT   |   CTRL  |  rotary |------------------------------
+                                 ---------------------------------------------------    ---------------------------------------------------                               */
 			bindings = <
-	&kp TAB   &kp Q       &kp W &kp F &kp P &kp B                                                &kp J  &kp L  &kp U        &kp Y       &kp SQT      &kp BSLH
-	&kp ESC   &mt LGUI A  &kp R &kp S &kp T &kp G                                                &kp M  &kp H  &kp E        &kp I       &mt LALT O   &kp SQT
+	&kp TAB   &kp Q       &kp W &kp F &kp P &kp B                                                &kp J  &kp L  &kp U        &kp Y       &kp DK_QUOT  &kp BSLH
+	&kp ESC   &phtl LGUI A  &kp R &kp S &kp T &kp G                                                &kp M  &kp N  &kp E        &kp I       &phtr LALT O   &kp SQT
 	&kp LSHFT &kp Z       &kp X &kp C &kp D &kp V &kp LSHFT &kp LCTRL        &kp LSHFT &kp LCTRL &kp K  &kp H  &kp DK_COMM  &kp DK_DOT  &kp DK_MINS  &kp RCTRL
 	          &kp LGUI    &kp LGUI &lt NUM BSPC &mt LCTRL SPACE &mt LSHFT RET   &mt LCTRL SPACE  &mt LSHIFT RET  &lt SYM TAB  &mt LALT ESC  &kp LALT
 			>;
-			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;
+			/* sensor-bindings = <&inc_dec_kp C_VOL_DN C_VOL_UP &inc_dec_kp PG_UP PG_DN>; */
+			sensor-bindings = <&inc_dec_kp K_SCROLL_DOWN K_SCROLL_UP &inc_dec_kp PG_DN PG_UP>;
+			/* sensor-bindings = <&inc_dec_kp SCROLL_DOWN SCROLL_UP &inc_dec_kp PG_DN PG_UP>; */
 		};
 
 		NUMBERS {
             label = "NUM";
 			bindings = <
 	&kp TAB   &kp N1      &kp N2     &kp N3      &kp N4      &kp N5                                                    &kp N6    &kp N7    &kp N8        &kp N9      &kp N0      &kp BSLH
-	&kp ESC   &mt LGUI N0 &kp DK_EQL &kp DK_ASTR &kp DK_SLSH &kp DK_AT                                                 &kp HOME  &kp N0    &kp N1        &kp END     &kp N0      &kp SQT
+	&kp ESC   &phtl LGUI N0 &kp DK_EQL &kp DK_ASTR &kp DK_SLSH &kp DK_AT                                                 &kp HOME  &kp N0    &kp N1        &kp END     &phtr LALT N0 &kp SQT
 	&kp LSHFT &kp DK_MINS &kp DK_EQL &kp DK_MINS &kp DK_PLUS &kp DK_CIRC  &kp LSHFT  &kp LSHFT    &kp LSHFT &kp LSHFT  &kp PG_DN &kp PG_UP &kp DK_COMM   &kp DK_DOT  &kp DK_MINS &kp RCTRL
 	          &kp LGUI &kp LGUI &trans &mt LCTRL SPACE &kp ESC                                  &kp RET &mt LSHIFT RET &lt CFG TAB &mt LALT ESC &kp LALT
 			>;
@@ -69,8 +127,8 @@
             label = "CFG";
 			bindings = <
 	&kp TAB   &kp F1  &kp F2  &kp F3 &kp F4 &kp F5                                               &kp F6  &kp F7  &kp F8        &kp F9      &kp F10     &kp DK_ARNG
-	&kp ESC   &kp F11 &kp F12 &kp S  &kp T  &kp G                                                &kp M   &kp H   &kp E         &kp I       &kp DK_AE   &kp DK_OSTR
-	&kp LSHFT &kp Z   &kp X   &kp C  &kp D  &kp V &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp K   &kp H   &kp DK_COMM   &kp DK_DOT  &kp DK_MINS &kp RCTRL
+	&kp ESC   &kp F11 &kp F12 &kp S  &mkp MB1  &mkp MB2                                          &mmv MOVE_LEFT &mmv MOVE_DOWN  &mmv MOVE_UP  &mmv MOVE_RIGHT  &kp DK_AE   &kp DK_OSTR
+	&kp LSHFT &kp Z   &kp X   &kp C  &kp D  &kp V &kp LSHFT &kp LSHFT        &kp LSHFT &kp LSHFT &kp K   &mwh SCROLL_DOWN &mwh SCROLL_UP  &kp DK_DOT  &kp DK_MINS &kp RCTRL
 	        &kp LGUI  &kp LGUI &trans &mt LCTRL SPACE &kp ESC         &kp RET   &mt LSHIFT RET   &trans &mt LALT ESC &kp LALT
 			>;
 			sensor-bindings = <&inc_dec_kp C_VOL_UP C_VOL_DN &inc_dec_kp PG_UP PG_DN>;

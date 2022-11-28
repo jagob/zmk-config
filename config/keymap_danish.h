@@ -71,11 +71,11 @@
 #define DK_J    J     // J
 #define DK_K    K     // K
 #define DK_L    L     // L
-#define DK_AE   A     // Æ KC_SCLN
-#define DK_OSTR O     // Ø KC_QUOT
-#define DK_QUOT NUHS  // '
+#define DK_AE   SEMICOLON    // Æ KC_SCLN
+#define DK_OSTR SINGLE_QUOTE // Ø
+#define DK_QUOT NON_US_HASH  // '
 // Row 4
-#define DK_LABK NUBS   // <
+#define DK_LABK NON_US_BACKSLASH   // <
 #define DK_Z    Z      // Z
 #define DK_X    X      // X
 #define DK_C    C      // C
